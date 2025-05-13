@@ -14,7 +14,6 @@ Característica: Eliminar gastos de un grupo
       Cuando el usuario reduce el saldo en '700'
       Entonces debería visualizar dentro del listado el grupo con total '$  0,00'
 
-    @pendiente
     Escenario: Eliminar un gasto mayor al total
       Dado que ya existe un grupo con saldo '700'
       Cuando el usuario reduce el saldo en '7000'

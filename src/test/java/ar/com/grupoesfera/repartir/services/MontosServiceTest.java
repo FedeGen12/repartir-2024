@@ -76,4 +76,18 @@ class MontosServiceTest {
 
         assertThat(grupo.getTotal()).isEqualTo($(0,0));
     }
+
+    @Test
+    void quitarMontoDelGastoMayorAlTotalDelGrupo() {
+
+        Grupo grupo = new Grupo();
+        grupo.setTotal($(100,0));
+
+        ReduccionGasto reduccionGasto = new ReduccionGasto();
+        reduccionGasto.setMonto($(1000,0));
+
+        montos.quitarAlTotal(grupo, reduccionGasto);
+
+        assertThat(grupo.getTotal()).isEqualTo($(0,0));
+    }
 }

@@ -25,9 +25,12 @@ public class MontosService {
     public void quitarAlTotal(Grupo grupo, ReduccionGasto reduccion) {
 
         BigDecimal total = grupo.getTotal();
-        if (total.compareTo(BigDecimal.ZERO) != 0) {
-            total = total.subtract(reduccion.getMonto());
+        BigDecimal monto = reduccion.getMonto();
+        if (total.compareTo(monto) >= 0) {
+            total = total.subtract(monto);
             grupo.setTotal(total);
+        } else {
+            grupo.setTotal(BigDecimal.valueOf(0,2));
         }
     }
 }
