@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class AgregarGastosJourneySteps extends CucumberSteps {
@@ -47,6 +48,7 @@ public class AgregarGastosJourneySteps extends CucumberSteps {
 
         var wait = new WebDriverWait(driver, 2);
         var mensajesToast = wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        wait.until(textToBePresentInElement(mensajesToast, mensaje));
         assertThat(mensajesToast.getText())
                 .contains("Éxito")
                 .contains(mensaje);
