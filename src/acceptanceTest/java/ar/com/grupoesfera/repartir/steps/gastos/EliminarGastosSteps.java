@@ -16,45 +16,16 @@ public class EliminarGastosSteps extends CucumberSteps {
 
     @Dado("que ya existe un grupo con saldo {string}")
     public void existeUnGrupoConSaldo(String monto) {
-        baseDeDatos.tieneElGrupoSinGastos(idGrupo, "Grupo de prueba");
+        crear_nuevo_grupo();
 
-        driver.navigate().to(url("/"));
+        iniciar_sesion_en_repartir();
 
-        var wait2 = new WebDriverWait(driver, 2);
-        wait2.until(visibilityOfElementLocated(By.id("iniciarDialog")));
-
-        driver.findElement(By.id("usuarioInput")).sendKeys("Martin");
-        var iniciarButton = driver.findElement(By.id("iniciarBienvenidaButton"));
-        iniciarButton.click();
-
-        var wait = new WebDriverWait(driver, 2);
-        var agregarGastoButton = wait.until(visibilityOfElementLocated(By.id("agregarGastoGruposButton-" + idGrupo)));
-        agregarGastoButton.click();
-
-        var montoInput = driver.findElement(By.id("montoGastoNuevoInput"));
-        montoInput.clear();
-        montoInput.sendKeys(monto);
-
-        var guardarGastoNuevoButton = driver.findElement(By.id("guardarGastoNuevoButton"));
-        guardarGastoNuevoButton.click();
-
-        wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        modificar_gasto_al_grupo(monto, "agregarGastoGruposButton-");
     }
 
     @Cuando("el usuario reduce el saldo en {string}")
     public void reducirSaldoEn(String monto) {
-        var wait = new WebDriverWait(driver, 2);
-        var agregarGastoButton = wait.until(visibilityOfElementLocated(By.id("reducirGastoGruposButton-" + idGrupo)));
-        agregarGastoButton.click();
-
-        var montoInput = driver.findElement(By.id("montoGastoNuevoInput"));
-        montoInput.clear();
-        montoInput.sendKeys(monto);
-
-        var guardarGastoNuevoButton = driver.findElement(By.id("guardarGastoNuevoButton"));
-        guardarGastoNuevoButton.click();
-
-        wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        modificar_gasto_al_grupo(monto, "reducirGastoGruposButton-");
     }
 
     @Entonces("debería visualizar dentro del listado el grupo con total {string}")
@@ -64,5 +35,35 @@ public class EliminarGastosSteps extends CucumberSteps {
         var campoTDs = grupoTR.get(1).findElements(By.tagName("td"));
         assertThat(campoTDs.get(0).getText()).isNotEmpty();
         assertThat(campoTDs.get(2).getText()).isEqualTo(monto);
+    }
+
+    private void iniciar_sesion_en_repartir() {
+        driver.navigate().to(url("/"));
+
+        var wait2 = new WebDriverWait(driver, 2);
+        wait2.until(visibilityOfElementLocated(By.id("iniciarDialog")));
+
+        driver.findElement(By.id("usuarioInput")).sendKeys("Martin");
+        var iniciarButton = driver.findElement(By.id("iniciarBienvenidaButton"));
+        iniciarButton.click();
+    }
+
+    private void crear_nuevo_grupo() {
+        baseDeDatos.tieneElGrupoSinGastos(idGrupo, "Grupo de prueba");
+    }
+
+    private void modificar_gasto_al_grupo(String monto, String id_boton) {
+        var wait = new WebDriverWait(driver, 2);
+        var agregarGastoButton = wait.until(visibilityOfElementLocated(By.id(id_boton + idGrupo)));
+        agregarGastoButton.click();
+
+        var montoInput = driver.findElement(By.id("montoGastoNuevoInput"));
+        montoInput.clear();
+        montoInput.sendKeys(monto);
+
+        var guardarGastoNuevoButton = driver.findElement(By.id("guardarGastoNuevoButton"));
+        guardarGastoNuevoButton.click();
+
+        wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
     }
 }
