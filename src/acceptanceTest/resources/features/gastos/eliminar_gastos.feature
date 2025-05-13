@@ -4,7 +4,6 @@ Característica: Eliminar gastos de un grupo
 
   Regla: El total de un grupo no debe ser negativo
 
-    @pendiente
     Escenario: Eliminar un gasto menor o igual al total
       Dado que ya existe un grupo con saldo '7000'
       Cuando el usuario reduce el saldo en '700'
