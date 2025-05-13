@@ -4,6 +4,7 @@ import { Grupo } from '../../model/grupo'
 import { GrupoService } from '../../services/grupo.service';
 import { GastoNuevoComponent } from '../gasto-nuevo/gasto-nuevo.component';
 import { GrupoNuevoComponent } from '../grupo-nuevo/grupo-nuevo.component';
+import { ReducirGastoComponent } from "../quitar-gasto/reducir-gasto.component";
 
 @Component({
   selector: 'app-grupos',
@@ -18,6 +19,8 @@ export class GruposComponent implements OnInit, AfterViewInit {
   @ViewChild(GrupoNuevoComponent) grupoNuevo!: GrupoNuevoComponent;
 
   @ViewChild(GastoNuevoComponent) gastoNuevo!: GastoNuevoComponent;
+
+  @ViewChild(ReducirGastoComponent) reducirGasto!: ReducirGastoComponent;
 
   constructor(private grupoService: GrupoService, private messageService: MessageService) {
 
@@ -50,6 +53,11 @@ export class GruposComponent implements OnInit, AfterViewInit {
   agregarGasto(grupo: Grupo): void {
 
     this.gastoNuevo.iniciarPara(grupo);
+  }
+
+  quitarGasto(grupo: Grupo): void {
+
+    this.reducirGasto.iniciarPara(grupo);
   }
 
   private listadoFallido(error: any): void {
