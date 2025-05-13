@@ -4,6 +4,7 @@ import ar.com.grupoesfera.repartir.exceptions.GrupoInvalidoException;
 import ar.com.grupoesfera.repartir.exceptions.GrupoNoEncontradoException;
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
+import ar.com.grupoesfera.repartir.model.ReduccionGasto;
 import ar.com.grupoesfera.repartir.repositories.GruposRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -170,5 +171,28 @@ class GruposServiceTest {
         Gasto gasto = new Gasto();
         gasto.setMonto(BigDecimal.valueOf(9700,2));
         return gasto;
+    }
+
+    private ReduccionGasto crearReduccionPor12() {
+
+        ReduccionGasto reduccionGasto = new ReduccionGasto();
+        reduccionGasto.setMonto(BigDecimal.valueOf(1200,2));
+        return reduccionGasto;
+    }
+
+    @Test
+    void quitarGastoDe12AlGrupoDelViajeQueTeniaComoTotal112() {
+
+        final Long ID_VIAJE = 89L;
+        final Grupo VIAJE = crearGrupoViajeConTotal112(ID_VIAJE);
+        final ReduccionGasto REDUCCION_POR_12 = crearReduccionPor12();
+        final BigDecimal $_100_00 = BigDecimal.valueOf(10000, 2);
+
+        when(repositoryMock.findById(ID_VIAJE)).thenReturn(Optional.of(VIAJE));
+
+        grupos.quitarGasto(ID_VIAJE, REDUCCION_POR_12);
+
+        assertThat(VIAJE.getTotal()).isEqualTo($_100_00);
+        verify(repositoryMock).save(VIAJE);
     }
 }

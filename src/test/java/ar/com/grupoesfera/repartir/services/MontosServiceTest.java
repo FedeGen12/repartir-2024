@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
+import ar.com.grupoesfera.repartir.model.ReduccionGasto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,5 +47,19 @@ class MontosServiceTest {
         montos.acumularAlTotal(grupo, gasto);
 
         assertThat(grupo.getTotal()).isEqualTo($(324,41));
+    }
+
+    @Test
+    void quitarMontoDelGastoAlTotalDelGrupo() {
+
+        Grupo grupo = new Grupo();
+        grupo.setTotal($(300,51));
+
+        ReduccionGasto reduccionGasto = new ReduccionGasto();
+        reduccionGasto.setMonto($(10,0));
+
+        montos.quitarAlTotal(grupo, reduccionGasto);
+
+        assertThat(grupo.getTotal()).isEqualTo($(290,51));
     }
 }

@@ -2,6 +2,7 @@ package ar.com.grupoesfera.repartir.services;
 
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
+import ar.com.grupoesfera.repartir.model.ReduccionGasto;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,4 +22,10 @@ public class MontosService {
         grupo.setTotal(total);
     }
 
+    public void quitarAlTotal(Grupo grupo, ReduccionGasto reduccion) {
+
+        BigDecimal total = grupo.getTotal();
+        total = total.subtract(reduccion.getMonto());
+        grupo.setTotal(total);
+    }
 }

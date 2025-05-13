@@ -4,6 +4,7 @@ import ar.com.grupoesfera.repartir.exceptions.GrupoInvalidoException;
 import ar.com.grupoesfera.repartir.exceptions.GrupoNoEncontradoException;
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
+import ar.com.grupoesfera.repartir.model.ReduccionGasto;
 import ar.com.grupoesfera.repartir.repositories.GruposRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +70,11 @@ public class GruposService {
         return grupo;
     }
 
+    public Grupo quitarGasto(Long id, ReduccionGasto reduccion) {
+
+        Grupo grupo = recuperar(id);
+        montos.quitarAlTotal(grupo, reduccion);
+        repository.save(grupo);
+        return grupo;
+    }
 }

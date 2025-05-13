@@ -3,6 +3,7 @@ package ar.com.grupoesfera.repartir.controllers;
 import ar.com.grupoesfera.repartir.exceptions.GrupoInvalidoException;
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
+import ar.com.grupoesfera.repartir.model.ReduccionGasto;
 import ar.com.grupoesfera.repartir.repositories.GruposRepository;
 import ar.com.grupoesfera.repartir.exceptions.GrupoNoEncontradoException;
 import ar.com.grupoesfera.repartir.services.GruposService;
@@ -91,6 +92,29 @@ public class GruposController {
         try {
 
             Grupo grupo = grupos.agregarGasto(id, gasto);
+
+            response = ResponseEntity.ok(grupo);
+
+        } catch (GrupoNoEncontradoException e) {
+
+            response = ResponseEntity.notFound().build();
+
+        } catch (Exception e) {
+
+            response = ResponseEntity.internalServerError().build();
+        }
+
+        return response;
+    }
+
+    @PostMapping("/{id}/quitar_gastos")
+    public ResponseEntity<Grupo> quitarGasto(@PathVariable Long id, @RequestBody ReduccionGasto reduccion) {
+
+        ResponseEntity<Grupo> response;
+
+        try {
+
+            Grupo grupo = grupos.quitarGasto(id, reduccion);
 
             response = ResponseEntity.ok(grupo);
 
