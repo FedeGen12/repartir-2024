@@ -1,4 +1,4 @@
-<p-dialog id="nuevoGastoDialog" header="Reducir Gasto" [(visible)]="mostrar" [modal]="true">
+<p-dialog id="nuevoGastoDialog" [header]="obtenerHeader()" [(visible)]="mostrar" [modal]="true">
   <div class="p-fluid">
     <div class="field">
       <label for="idGrupoGastoNuevoInput">Grupo</label>

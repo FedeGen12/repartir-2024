@@ -2,9 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Grupo } from '../../model/grupo'
 import { GrupoService } from '../../services/grupo.service';
-import { GastoNuevoComponent } from '../gasto-nuevo/gasto-nuevo.component';
 import { GrupoNuevoComponent } from '../grupo-nuevo/grupo-nuevo.component';
-import { ReducirGastoComponent } from "../quitar-gasto/reducir-gasto.component";
+import { OperacionSobreGastoComponent } from "../operacion-sobre-gasto/operacion-sobre-gasto.component";
 
 @Component({
   selector: 'app-grupos',
@@ -18,9 +17,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   @ViewChild(GrupoNuevoComponent) grupoNuevo!: GrupoNuevoComponent;
 
-  @ViewChild(GastoNuevoComponent) gastoNuevo!: GastoNuevoComponent;
-
-  @ViewChild(ReducirGastoComponent) reducirGasto!: ReducirGastoComponent;
+  @ViewChild(OperacionSobreGastoComponent) operacionGasto!: OperacionSobreGastoComponent;
 
   constructor(private grupoService: GrupoService, private messageService: MessageService) {
 
@@ -34,7 +31,7 @@ export class GruposComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
 
     this.grupoNuevo.guardadoEvent.subscribe(() => this.cargar());
-    this.gastoNuevo.guardadoEvent.subscribe(() => this.cargar());
+    this.operacionGasto.guardadoEvent.subscribe(() => this.cargar());
   }
 
   private cargar(): void {
@@ -52,12 +49,12 @@ export class GruposComponent implements OnInit, AfterViewInit {
 
   agregarGasto(grupo: Grupo): void {
 
-    this.gastoNuevo.iniciarPara(grupo);
+    this.operacionGasto.iniciarPara(grupo, true);
   }
 
   quitarGasto(grupo: Grupo): void {
 
-    this.reducirGasto.iniciarPara(grupo);
+    this.operacionGasto.iniciarPara(grupo, false);
   }
 
   private listadoFallido(error: any): void {

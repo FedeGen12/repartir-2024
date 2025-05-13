@@ -22,8 +22,7 @@ import { AppComponent } from './app.component';
 
 import { GruposComponent } from './components/grupos/grupos.component';
 import { GrupoNuevoComponent } from './components/grupo-nuevo/grupo-nuevo.component';
-import { GastoNuevoComponent } from './components/gasto-nuevo/gasto-nuevo.component';
-import { ReducirGastoComponent } from './components/quitar-gasto/reducir-gasto.component';
+import { OperacionSobreGastoComponent } from './components/operacion-sobre-gasto/operacion-sobre-gasto.component';
 import { IdentificarGrupoPipe } from './pipes/identificar-grupo.pipe';
 import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
@@ -36,8 +35,7 @@ registerLocaleData(localeEs, 'es-AR');
     AppComponent,
     GruposComponent,
     GrupoNuevoComponent,
-    GastoNuevoComponent,
-    ReducirGastoComponent,
+    OperacionSobreGastoComponent,
     IdentificarGrupoPipe,
     BienvenidaComponent,
     UsuarioComponent,
